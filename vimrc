@@ -37,8 +37,19 @@ set softtabstop=4
 set expandtab
 set noshiftround
 
+" Split bottom
+set splitbelow
+
+" Remove trailing whitespaces on save
+autocmd BufWritePre * %s/\s\+$//e
+
+" Do not open the first file on tab, inside split
+"if (&diff==0)
+"        :autocmd BufReadPost * tab ball
+"endif
+
 " warm me subtly about overlength line
-highlight OverLength ctermbg=yellow ctermfg=red guibg=#592929
+highlight OverLength ctermbg=green ctermfg=red guibg=#592929
 match OverLength /\%81v.\+/
 
 " Cursor motion
@@ -57,16 +68,15 @@ set hidden
 " Rendering
 set ttyfast
 
-" Status bar
+" Status bar and show filename
 set laststatus=2
+set statusline=%f
 
 " Last line
 set showmode
 set showcmd
 
 " Searching
-nnoremap / /\v
-vnoremap / /\v
 set hlsearch
 set incsearch
 set ignorecase
@@ -91,15 +101,19 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+" comment the following if you want to enable Syntastic by default
+" :SyntasticToggleMode in vim to enable it back
+autocmd VimEnter * SyntasticToggleMode
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_quiet_messages = { 'regex': 'E302' }
+let g:syntastic_quiet_messages = { 'regex': 'E302\|E265\|E501'}
 let g:syntastic_python_checkers = ['flake8', 'pylint']
-let g:syntastic_python_pylint_args = '-E'
-let g:syntastic_quiet_messages = {
-        \ "!level":  "errors",
-        \ "type":    "style",
-        \ "file:p":  '.*' }
+"let g:syntastic_python_pylint_args = '-E'
+"let g:syntastic_quiet_messages = {
+"        \ "!level":  "errors",
+"        \ "type":    "style",
+"        \ "file:p":  '.*' }
 
